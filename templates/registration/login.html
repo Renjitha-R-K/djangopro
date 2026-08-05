@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <h3 class="text-center mb-4">
+                        Login Your CareerHub Account
+                    </h3>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+
+    <input type="submit" value="Login" class="btn btn-primary w-100">
+</form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
