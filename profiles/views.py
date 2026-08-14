@@ -1,3 +1,45 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import JobSeekerProfileForm,EmployerProfileForm
+from .models import JobSeekerProfile,EmployerProfile
 
-# Create your views here.
+class CreateJobSeekerProfileView(LoginRequiredMixin,View):
+    def get(self,request):
+        if JobSeekerProfile.objects.filter(user=request.user).exists():
+            return redirect('users:home')
+
+        form_instance=JobSeekerProfileForm()
+        return render(request,'jobseeker.html',{'form':form_instance})
+
+    def post(self,request):
+        if JobSeekerProfile.objects.filter(user=request.user).exists():
+            return redirect("users:home")
+
+        form_instance=JobSeekerProfileForm(request.POST,request.FILES)
+        if form_instance.is_valid():
+            profile=form_instance.save(commit=False)
+            profile.user=request.user
+            profile.save()
+            return redirect('users:home')
+        return render(request, 'jobseeker.html', {'form': form_instance})
+
+
+class CreateEmployerProfileView(LoginRequiredMixin, View):
+    def get(self,request):
+        if EmployerProfile.objects.filter(user=request.user).exists():
+            return redirect('users:home')
+        form_instance=EmployerProfileForm()
+        return render(request,'employer.html',{'form':form_instance})
+
+    def post(self,request):
+        if EmployerProfile.objects.filter(user=request.user).exists():
+            return redirect('users:home')
+
+        form_instance=EmployerProfileForm(request.POST,request.FILES)
+        if form_instance.is_valid():
+            profile=form_instance.save(commit=False)
+            profile.user=request.user
+            profile.save()
+            return redirect('users:home')
+        return render(request, 'employer.html', {'form': form_instance})

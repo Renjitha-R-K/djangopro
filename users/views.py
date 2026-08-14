@@ -6,7 +6,7 @@ from users.forms import CustomUserForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class HomeView(LoginRequiredMixin,View):
+class HomeView(View):
     def get(self,request):
         return render(request,'home.html')
 
@@ -19,7 +19,7 @@ class RegisterView(View):
         form_instance=CustomUserForm(request.POST)
         if form_instance.is_valid():
             form_instance.save()
-            return redirect('login')
+            return redirect('users:login')
         return render(request, 'registration.html', {'forms': form_instance})
 
 

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>My Jobs</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container p-5">
+
+   <table class="table table-hover table-bordered">
+    <thead class="table-light">
+            <tr>
+                <th colspan="6" class="text-center">My Jobs</th>
+            </tr>
+
+            <tr>
+                <th>Job Title</th>
+                <th>Location</th>
+                <th>Job Type</th>
+                <th>Salary</th>
+                <th>Deadline</th>
+                <th>Active Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.title }}</td>
+                <td>{{ job.location }}</td>
+                <td>{{ job.job_type }}</td>
+                <td>{{ job.salary }}</td>
+                <td>{{ job.deadline }}</td>
+                <td>{{ job.is_active }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
