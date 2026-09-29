@@ -15,7 +15,6 @@ class JobSeekerProfile(models.Model):
     education=models.CharField(max_length=100)
     experience=models.CharField(max_length=20)
     profile_picture=models.ImageField(upload_to="profiles/",null=True, blank=True)
-    resume=models.FileField(upload_to="resumes/",null=True,blank=True)
     github=models.URLField(null=True,blank=True)
     linkedin=models.URLField(null=True,blank=True)
 

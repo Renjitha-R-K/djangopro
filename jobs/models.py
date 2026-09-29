@@ -1,7 +1,6 @@
 
-
 from django.db import models
-from profiles.models import EmployerProfile
+from profiles.models import EmployerProfile,JobSeekerProfile
 
 
 class Job(models.Model):
@@ -26,3 +25,21 @@ class Job(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Application(models.Model):
+    STATUS_CHOICES=[('applied','Applied'),
+                    ('shortlisted','Shortlisted'),
+                    ('rejected','Rejected'),
+                    ('hired','Hired')]
+
+
+    job_seeker=models.ForeignKey(JobSeekerProfile,on_delete=models.CASCADE)
+    job=models.ForeignKey(Job,on_delete=models.CASCADE)
+    resume=models.FileField(upload_to='resumes/',null=True,blank=True)
+    cover_letter=models.TextField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES,default='applied')
+    applied_date=models.DateField(auto_now_add=True)
+    updated_at=models.DateField(auto_now=True)
+    employer_note=models.TextField(null=True,blank=True)
+

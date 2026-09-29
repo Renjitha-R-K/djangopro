@@ -41,7 +41,7 @@
 
                         {% if has_jobseeker_profile %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'profiles:jobseeker-profile' %}">
                                     My Profile
                                 </a>
                             </li>
@@ -55,14 +55,21 @@
                         {% endif %}
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{% url 'jobs:job-list' %}">
                                 Jobs
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{% url 'jobs:my-app' %}">
                                 My Applications
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'jobs:jobseek-dashboard' %}">
+                                Dashboard
                             </a>
                         </li>
 
@@ -70,7 +77,7 @@
 
                         {% if has_employer_profile %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'profiles:employer-profile' %}">
                                     My Profile
                                 </a>
                             </li>
@@ -93,7 +100,20 @@
                             <a class="nav-link" href="{% url 'jobs:my-jobs' %}">
                                 My Jobs
                             </a>
+
                         </li>
+                <li class="nav-item">
+
+                  <a class="nav-link" href="{% url 'jobs:view-applications' %}">
+        Applications
+
+    </a>
+                        </li>
+                <li class="nav-item">
+    <a class="nav-link" href="{% url 'jobs:emp-dashboard' %}">
+        Dashboard
+    </a>
+</li>
 
                     {% endif %}
 
@@ -131,10 +151,16 @@
         </div>
     </div>
 </nav>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 {% block content %}
 {% endblock %}
-
 </body>
 </html>
 

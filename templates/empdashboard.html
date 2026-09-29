@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Employer Dashboard</title>
+{% endblock %}
+
+{% block content %}
+<div class="container p-5">
+    <div class="row">
+     <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Jobs</h5>
+                <h2>{{total_jobs}}</h2>
+            </div>
+        </div>
+     </div>
+
+
+
+     <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Active Jobs</h5>
+                <h2>{{active_jobs}}</h2>
+            </div>
+        </div>
+     </div>
+
+
+
+
+     <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Total Applications</h5>
+                <h2>{{total_applications}}</h2>
+            </div>
+        </div>
+     </div>
+    </div>
+<h3 class="mt-5">Recent Applications</h3>
+
+<div class="row">
+
+    {% for application in recent_applications %}
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <h5>
+                        {{ application.job_seeker.full_name }}
+                    </h5>
+
+                    <p>
+                        <strong>Job:</strong>
+                        {{ application.job.title }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ application.status }}
+                    </p>
+
+                    <p>
+                        <strong>Applied:</strong>
+                        {{ application.applied_date }}
+                    </p>
+
+                    <a href="{% url 'jobs:app-detail' application.pk %}"
+                       class="btn btn-primary">
+                        View Application
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <p class="text-muted">
+            No applications yet.
+        </p>
+
+    {% endfor %}
+
+</div>
+</div>
+{% endblock %}

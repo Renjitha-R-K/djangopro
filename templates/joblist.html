@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Job List</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container p-5">
+
+    <form method="GET" class="mb-4">
+
+        <div class="row g-2">
+
+            <!-- Search by Job Title -->
+            <div class="col-md-6">
+                <input type="text"
+                       name="q"
+                       class="form-control"
+                       placeholder="Search by job title"
+                       value="{{ request.GET.q }}">
+            </div>
+
+            <!-- Location Filter -->
+            <div class="col-md-4">
+                <select name="location" class="form-select">
+
+                    <option value="">All Locations</option>
+
+                    {% for location in locations %}
+                        <option value="{{ location }}"
+                                {% if location == selected_location %}selected{% endif %}>
+                            {{ location }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <!-- Job Type Filter -->
+            <div class="col-md-2">
+                <select name="job_type" class="form-select">
+
+                    <option value="">All Job Types</option>
+
+                    {% for job_type in job_types %}
+                        <option value="{{ job_type.0 }}"
+                                {% if job_type.0 == selected_job_type %}selected{% endif %}>
+                            {{ job_type.1 }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            <!-- Search Button -->
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    Search
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+
+    <!-- Job Cards -->
+    <div class="row">
+
+        {% for job in jobs %}
+
+            <div class="col-md-3 mb-4">
+
+                <div class="card h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            {{ job.title }}
+                        </h5>
+
+                        <p class="card-text">
+                            📍 {{ job.location }}
+                        </p>
+
+                        <p class="card-text">
+                            💼 {{ job.get_job_type_display }}
+                        </p>
+
+                        <p class="card-text">
+                            💰 {{ job.salary }}
+                        </p>
+
+                        <p class="card-text">
+                            🗓️ {{ job.deadline }}
+                        </p>
+
+                        {% if job.pk in applied_job_ids %}
+
+    <button class="btn btn-success" disabled>
+        Already Applied
+    </button>
+
+{% else %}
+
+    <a href="{% url 'jobs:job-apply' job.pk %}"
+       class="btn btn-primary">
+        Apply
+    </a>
+
+{% endif %}
+
+                        <a href="{% url 'jobs:job-detail' job.pk %}"
+                           class="btn btn-primary">
+                            View Details
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="text-center mt-4">
+
+                <h5>No jobs found</h5>
+
+                <p class="text-muted">
+                    Try searching with a different keyword.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+{% if jobs.has_previous %}
+    <a href="{% querystring page=jobs.previous_page_number %}">
+    Previous
+</a>
+
+
+    {% endif %}
+
+{% if jobs.has_next %}
+    <a href="{% querystring page=jobs.next_page_number %}">Next</a>
+    {% endif %}
+</div>
+
+{% endblock %}

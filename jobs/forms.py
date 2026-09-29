@@ -1,5 +1,5 @@
 from django import forms
-from .models import Job
+from .models import Job,Application
 
 
 class JobForm(forms.ModelForm):
@@ -11,3 +11,16 @@ class JobForm(forms.ModelForm):
                 attrs={'type': 'date'}
             ),
         }
+
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model=Application
+        fields=['resume','cover_letter']
+
+
+
+class ApplicationUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields=['status','employer_note']

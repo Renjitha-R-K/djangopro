@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Applications</title>
+{% endblock %}
+
+{% block content %}
+<div class="container p-5">
+     <table class="table table-hover table-bordered">
+    <thead class="table-light">
+         <tr>
+             <th colspan="6" class="text-center">My Applications </th>
+         </tr>
+
+         <tr>
+             <th>Job title</th>
+             <th>Location</th>
+             <th>Job type</th>
+             <th>Salary</th>
+             <th>Applied date</th>
+             <th>Status</th>
+
+         </tr>
+
+         <tbody>
+           {% for apply in applications %}
+           <tr>
+               <td>{{apply.job.title}}</td>
+               <td>{{apply.job.location}}</td>
+               <td>{{apply.job.job_type}}</td>
+               <td>{{apply.job.salary}}</td>
+               <td>{{apply.applied_date}}</td>
+               <td>{{apply.status}}</td>
+           </tr>
+           {% endfor %}
+         </tbody>
+    </table>
+</div>
+{% endblock %}

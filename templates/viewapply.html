@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Applications View</title>
+{% endblock %}
+
+{% block content %}
+<div class="container p-5">
+     <table class="table table-hover table-bordered">
+    <thead class="table-light">
+         <tr>
+             <th colspan="5" class="text-center">Applications </th>
+         </tr>
+
+         <tr>
+             <th>Applicant name</th>
+             <th>Job title</th>
+             <th>Applied date</th>
+             <th>Status</th>
+             <th>Action</th>
+
+         </tr>
+
+         <tbody>
+           {% for apply in applications %}
+           <tr>
+               <td>{{apply.job_seeker.full_name}}</td>
+               <td>{{apply.job.title}}</td>
+               <td>{{apply.applied_date}}</td>
+               <td>{{apply.status}}</td>
+               <td><a href="{% url 'jobs:app-detail' apply.pk %}" class="btn btn-primary btn-sm">View Application</a></td>
+           </tr>
+           {% endfor %}
+         </tbody>
+    </table>
+</div>
+{% endblock %}

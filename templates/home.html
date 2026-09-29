@@ -25,11 +25,11 @@
 
       <div class="text-center mt-4">
 
-    <a class="btn btn-primary me-2" href="#">
+    <a class="btn btn-primary me-2" href="{% url 'jobs:job-list' %}">
         Browse Jobs
     </a>
 
-    <a class="btn btn-outline-primary" href="#">
+    <a class="btn btn-outline-primary" href="{% url 'jobs:my-app' %} ">
         My Applications
     </a>
 
@@ -50,6 +50,10 @@
 
     <a class="btn btn-outline-primary" href="{% url 'jobs:my-jobs' %}">
         My Jobs
+
+    </a>
+                   <a class="btn btn-outline-primary" href="{% url 'jobs:view-applications' %}">
+        Applications
 
     </a>
 </div>

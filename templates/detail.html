@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>{{ job.title }}</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container w-75 p-5">
+
+    <div class="card mb-3">
+        <div class="card-body">
+
+            <h2 class="card-title">{{ job.title }}</h2>
+
+            <p class="card-text">
+    <strong>Company:</strong>
+    {{ job.employer.company_name }}
+</p>
+
+            <p class="card-text">
+                <strong>Description:</strong>
+                {{ job.description }}
+            </p>
+
+            <p class="card-text">
+                <strong>Requirements:</strong>
+                {{ job.requirements }}
+            </p>
+
+            <p class="card-text">
+                <strong>📍 Location:</strong>
+                {{ job.location }}
+            </p>
+
+            <p class="card-text">
+                <strong>💼 Job Type:</strong>
+                {{ job.get_job_type_display }}
+            </p>
+
+            <p class="card-text">
+                <strong>💰 Salary:</strong>
+                {{ job.salary }}
+            </p>
+
+            <p class="card-text">
+                <strong>🗓️ Deadline:</strong>
+                {{ job.deadline }}
+            </p>
+
+{% if user.role == 'job_seeker' %}
+    {% if already_applied %}
+                <button class="btn btn-success" disabled>
+        Already Applied
+    </button>
+    {% else %}
+                <a href="{% url 'jobs:job-apply' job.pk %}"
+       class="btn btn-primary">
+        Apply Now
+    </a>
+                {% endif %}
+
+{% endif %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

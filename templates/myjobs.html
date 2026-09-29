@@ -11,7 +11,7 @@
    <table class="table table-hover table-bordered">
     <thead class="table-light">
             <tr>
-                <th colspan="6" class="text-center">My Jobs</th>
+                <th colspan="7" class="text-center">My Jobs</th>
             </tr>
 
             <tr>
@@ -21,6 +21,7 @@
                 <th>Salary</th>
                 <th>Deadline</th>
                 <th>Active Status</th>
+                <th>Action</th>
             </tr>
         </thead>
 
@@ -33,6 +34,16 @@
                 <td>{{ job.salary }}</td>
                 <td>{{ job.deadline }}</td>
                 <td>{{ job.is_active }}</td>
+                <td><a href="{% url 'jobs:job-detail' job.pk %}" class="btn btn-primary btn-sm">
+        View Details
+    </a>
+                    <a href="{% url 'jobs:editjob' job.pk %}" class="btn btn-primary btn-sm">
+        Edit
+    </a>
+                    <a href="{% url 'jobs:deletejob' job.pk %}" class="btn btn-danger btn-sm">
+    Delete
+</a>
+</td>
             </tr>
             {% endfor %}
         </tbody>

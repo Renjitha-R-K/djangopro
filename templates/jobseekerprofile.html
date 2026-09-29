@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>JobSeeker Profile</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+                <div class="card-body text-center">
+
+                    {% if jobseeker.profile_picture %}
+                        <img src="{{ jobseeker.profile_picture.url }}"
+                             class="rounded-circle mb-3"
+                             width="120"
+                             height="120"
+                             alt="Profile Picture">
+                    {% endif %}
+
+                    <h2 class="card-title">{{ jobseeker.full_name }}</h2>
+
+                    <p class="text-muted">
+                        📍 {{ jobseeker.location }}
+                    </p>
+
+                    <hr>
+
+                    <div class="text-start">
+                        <h5>Personal Information</h5>
+
+                        <p><strong>Education:</strong> {{ jobseeker.education}}</p>
+
+                        <p><strong>Experience:</strong> {{ jobseeker.experience }}</p>
+                        <p><strong>Skills:</strong> {{jobseeker.skills }}</p>
+
+                        {% if jobseeker.github %}
+                            <p>
+                                <strong>GitHub:</strong>
+                                <a href="{{ jobseeker.github }}" target="_blank">
+                                    {{ jobseeker.github }}
+                                </a>
+                            </p>
+                        {% endif %}
+
+                        {% if jobseeker.linkedin %}
+                            <p>
+                                <strong>LinkedIn:</strong>
+                                <a href="{{ jobseeker.linkedin }}" target="_blank">
+                                    {{ jobseeker.linkedin }}
+                                </a>
+                            </p>
+                        {% endif %}
+
+
+
+
+                    </div>
+
+                    <a href="{% url 'profiles:editjob' %}" class="btn btn-primary mt-3">
+                        Edit Profile
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
