@@ -16,13 +16,14 @@ Including another URLconf
 """
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
-from .views import JobListAPIView,JobDetailAPIView,ApplyJobAPIView
+from .views import JobListAPIView,JobDetailAPIView,ApplyJobAPIView,MyApplicationsAPIView
 
 urlpatterns = [
     path('jobs/',JobListAPIView.as_view(),name='job-list-api'),
     path('jobs/<int:pk>/',JobDetailAPIView.as_view(), name='job-detail-api'),
     path('apply/<int:pk>/',ApplyJobAPIView.as_view(),name='apply-job-api'),
     path('token/',TokenObtainPairView.as_view(),name='token-obtain-pair'),
-    path('token/refresh/',TokenRefreshView.as_view(),name='token-refresh')
+    path('token/refresh/',TokenRefreshView.as_view(),name='token-refresh'),
+    path('my-applications/', MyApplicationsAPIView.as_view(), name='my-app-api'),
 
 ]

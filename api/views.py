@@ -82,3 +82,11 @@ class ApplyJobAPIView(APIView):
 
 
 
+class MyApplicationsAPIView(APIView):
+    permission_classes = [IsJobSeeker]
+    def get(self,request):
+        jobseek=JobSeekerProfile.objects.get(user=request.user)
+        apply=Application.objects.filter(job_seeker=jobseek,)
+        serializer=ApplicationSerializer(apply,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
