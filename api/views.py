@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from jobs.models import Job,Application
 from profiles.models import EmployerProfile,JobSeekerProfile
-from .serializers import JobSerializer,ApplicationSerializer
+from .serializers import JobSerializer,ApplicationSerializer,ApplicationStatusUpdateSerializer
 from .permissions import IsEmployer, IsJobOwner,IsJobSeeker
 
 
@@ -89,4 +89,36 @@ class MyApplicationsAPIView(APIView):
         apply=Application.objects.filter(job_seeker=jobseek,)
         serializer=ApplicationSerializer(apply,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+class EmployerApplicationsAPIView(APIView):
+    permission_classes = [IsEmployer]
+    def get(self,request):
+        employer=EmployerProfile.objects.get(user=request.user)
+        apply=Application.objects.filter(job__employer=employer)
+        serializer=ApplicationSerializer(apply,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+class ApplicationDetailAPIView(APIView):
+    permission_classes = [IsEmployer]
+    def get(self,request,pk):
+        detail=get_object_or_404(Application,pk=pk,job__employer__user=request.user)
+        serializer=ApplicationSerializer(detail)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+
+class ApplicationStatusUpdateAPIView(APIView):
+    permission_classes = [IsEmployer]
+    def patch(self,request,pk):
+        detail=get_object_or_404(Application,pk=pk,job__employer__user=request.user)
+        serializer=ApplicationStatusUpdateSerializer(detail,data=request.data,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 

@@ -15,13 +15,14 @@ class JobSerializer(serializers.ModelSerializer):
 class ApplicationSerializer(serializers.ModelSerializer):
     class Meta:
         model=Application
-        read_only_fields=['job','employer_note','status','updated_at']
-        fields=['job','resume','cover_letter','status','updated_at','employer_note']
+        read_only_fields=['id','job','employer_note','status','updated_at']
+        fields=['id','job','resume','cover_letter','status','updated_at','employer_note']
 
 
 
-
-
-
+class ApplicationStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Application
+        fields=['status','employer_note']
 
 

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
-from .views import JobListAPIView,JobDetailAPIView,ApplyJobAPIView,MyApplicationsAPIView
+from .views import JobListAPIView,JobDetailAPIView,ApplyJobAPIView,MyApplicationsAPIView,EmployerApplicationsAPIView,ApplicationDetailAPIView,ApplicationStatusUpdateAPIView
 
 urlpatterns = [
     path('jobs/',JobListAPIView.as_view(),name='job-list-api'),
@@ -25,5 +25,8 @@ urlpatterns = [
     path('token/',TokenObtainPairView.as_view(),name='token-obtain-pair'),
     path('token/refresh/',TokenRefreshView.as_view(),name='token-refresh'),
     path('my-applications/', MyApplicationsAPIView.as_view(), name='my-app-api'),
+    path('employer-applications/',EmployerApplicationsAPIView.as_view(),name='employer-app-api'),
+    path('app-detail/<int:pk>/',ApplicationDetailAPIView.as_view(),name='app-detail-api'),
+    path('app-status-update/<int:pk>/',ApplicationStatusUpdateAPIView.as_view(),name='app-status-api'),
 
 ]
