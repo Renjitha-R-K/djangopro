@@ -5,8 +5,11 @@
 
 {% block content %}
 <div class="container p-5">
-   <div class="card" style="width: 18rem;">
-  <div class="card-body">
+
+    <div class="row g-4">
+  <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
     <h5 class="card-title">👤 Application Details</h5>
      <p class="card-text">
                 <strong>Full Name:</strong>
@@ -75,10 +78,13 @@
 {% endif %}
   </div>
 </div>
+  </div>
 
 
-   <div class="card" style="width: 18rem;">
-  <div class="card-body">
+
+      <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
     <h5 class="card-title">💼 Applied Job Information</h5>
      <p class="card-text">
                 <strong>Job Title:</strong>
@@ -87,7 +93,7 @@
 
       <p class="card-text">
                 <strong>Job Type:</strong>
-                {{application.job.job_type}}
+               {{ application.job.get_job_type_display }}
      </p>
 
        <p class="card-text">
@@ -106,10 +112,13 @@
      </p>
   </div>
 </div>
+      </div>
 
 
- <div class="card" style="width: 18rem;">
-  <div class="card-body">
+
+<div class="col-12">
+            <div class="card">
+                <div class="card-body">
     <h5 class="card-title">📄 Application Information</h5>
       {% if application.resume %}
      <p class="card-text">
@@ -149,7 +158,8 @@
      </p>
   </div>
 </div>
-
-
 </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -52,12 +52,13 @@ class MyJobsView(LoginRequiredMixin,View):
 
 class JobDetailView(LoginRequiredMixin,View):
     def get(self,request,pk):
-        job=Job.objects.get(pk=pk)
+        job = get_object_or_404(Job, pk=pk)
         already_applied = False
         if request.user.role == 'job_seeker':
-            job_seeker=JobSeekerProfile.objects.get(user=request.user)
-            if Application.objects.filter(job_seeker=job_seeker,job=job).exists():
-                already_applied=True
+            if JobSeekerProfile.objects.filter(user=request.user).exists():
+                job_seeker=JobSeekerProfile.objects.get(user=request.user)
+                if Application.objects.filter(job_seeker=job_seeker,job=job).exists():
+                    already_applied=True
         return render(request,'detail.html',{'job':job,'already_applied':already_applied})
 
 
@@ -151,28 +152,33 @@ class ApplicationDetailView(LoginRequiredMixin,View):
             employer_profile = EmployerProfile.objects.get(user=request.user)
             application=get_object_or_404(Application.objects.filter(job__employer=employer_profile),pk=pk)
             return render(request,'appdetail.html',{'application':application})
+        return redirect('profiles:create-employer-profile')
 
 
 class ApplicationUpdateView(LoginRequiredMixin,View):
     def get(self,request,pk):
         if request.user.role != 'employer':
             return redirect('users:home')
-        employer_profile=EmployerProfile.objects.get(user=request.user)
-        application=get_object_or_404(Application.objects.filter(job__employer=employer_profile),pk=pk)
-        form_instance=ApplicationUpdateForm(instance=application)
-        return render(request,'appupdate.html',{'form':form_instance})
+        if EmployerProfile.objects.filter(user=request.user).exists():
+            employer_profile=EmployerProfile.objects.get(user=request.user)
+            application=get_object_or_404(Application.objects.filter(job__employer=employer_profile),pk=pk)
+            form_instance=ApplicationUpdateForm(instance=application)
+            return render(request,'appupdate.html',{'form':form_instance})
+        return redirect('profiles:create-employer-profile')
 
 
     def post(self,request,pk):
         if request.user.role != 'employer':
             return redirect('users:home')
-        employer_profile = EmployerProfile.objects.get(user=request.user)
-        application = get_object_or_404(Application.objects.filter(job__employer=employer_profile), pk=pk)
-        form_instance = ApplicationUpdateForm(request.POST,instance=application)
-        if form_instance.is_valid():
-            form_instance.save()
-            return redirect('jobs:view-applications')
-        return render(request, 'appupdate.html', {'form': form_instance})
+        if EmployerProfile.objects.filter(user=request.user).exists():
+            employer_profile = EmployerProfile.objects.get(user=request.user)
+            application = get_object_or_404(Application.objects.filter(job__employer=employer_profile), pk=pk)
+            form_instance = ApplicationUpdateForm(request.POST,instance=application)
+            if form_instance.is_valid():
+                form_instance.save()
+                return redirect('jobs:view-applications')
+            return render(request, 'appupdate.html', {'form': form_instance})
+        return redirect('profiles:create-employer-profile')
 
 
 

@@ -22,7 +22,6 @@ app_name="jobs"
 urlpatterns = [
     path("create/", views.CreateJobView.as_view(), name="create-job"),
     path('my-jobs/',views.MyJobsView.as_view(),name='my-jobs'),
-    path('<int:pk>/',views.JobDetailView.as_view(),name='job-detail'),
     path('jobs-list/',views.JobListView.as_view(),name='job-list'),
     path('job-apply/<int:pk>/',views.ApplyJobView.as_view(),name='job-apply'),
     path('my-app/',views.MyApplicationsView.as_view(),name='my-app'),
@@ -33,5 +32,6 @@ urlpatterns = [
     path('deletejob/<int:pk>/',views.DeleteJobView.as_view(),name='deletejob'),
     path('emp-dashboard/', views.EmployerDashboardView.as_view(), name='emp-dashboard'),
     path('jobseek-dashboard/',views.JobSeekerDashboardView.as_view(),name='jobseek-dashboard'),
+    path('<int:pk>/', views.JobDetailView.as_view(), name='job-detail'),
 
 ]

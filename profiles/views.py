@@ -53,7 +53,7 @@ class EmployerProfileView(LoginRequiredMixin, View):
         if EmployerProfile.objects.filter(user=request.user).exists():
             employer=EmployerProfile.objects.get(user=request.user)
             return render(request,'empprofile.html',{'employer':employer})
-        return redirect('users:create-employer-profile')
+        return redirect('profiles:create-employer-profile')
 
 
 class EditEmployerProfileView(LoginRequiredMixin,View):
@@ -100,6 +100,7 @@ class EditJobseekerProfileView(LoginRequiredMixin,View):
             jobseek=JobSeekerProfile.objects.get(user=request.user)
             form_instance=JobSeekerProfileForm(instance=jobseek)
             return render(request,'editjobseek.html',{'form':form_instance})
+        return redirect('profiles:create-jobseeker-profile')
 
     def post(self,request):
         if request.user.role != 'job_seeker':

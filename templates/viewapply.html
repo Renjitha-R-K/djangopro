@@ -5,7 +5,8 @@
 
 {% block content %}
 <div class="container p-5">
-     <table class="table table-hover table-bordered">
+     <div class="table-responsive">
+    <table class="table table-hover table-bordered">
     <thead class="table-light">
          <tr>
              <th colspan="5" class="text-center">Applications </th>
@@ -19,18 +20,19 @@
              <th>Action</th>
 
          </tr>
-
+    </thead>
          <tbody>
            {% for apply in applications %}
            <tr>
                <td>{{apply.job_seeker.full_name}}</td>
                <td>{{apply.job.title}}</td>
                <td>{{apply.applied_date}}</td>
-               <td>{{apply.status}}</td>
+               <td>{{ apply.get_status_display }}</td>
                <td><a href="{% url 'jobs:app-detail' apply.pk %}" class="btn btn-primary btn-sm">View Application</a></td>
            </tr>
            {% endfor %}
          </tbody>
     </table>
+</div>
 </div>
 {% endblock %}

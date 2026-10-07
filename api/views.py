@@ -11,12 +11,13 @@ from .permissions import IsEmployer, IsJobOwner,IsJobSeeker
 
 
 class JobListAPIView(APIView):
+
     def get_permissions(self):
         if self.request.method == 'POST':
-            permission_classes = [IsEmployer()]
+            permission_classes = [IsEmployer]
         else:
-            permission_classes=[IsAuthenticated()]
-        return permission_classes
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
     def get(self,request):
         jobs=Job.objects.all()
         serializer=JobSerializer(jobs,many=True)
@@ -31,12 +32,13 @@ class JobListAPIView(APIView):
 
 
 class JobDetailAPIView(APIView):
+
     def get_permissions(self):
-        if self.request.method in ['PUT','PATCH','DELETE']:
-            permission_classes = [IsEmployer(), IsJobOwner()]
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            permission_classes = [IsEmployer, IsJobOwner]
         else:
-            permission_classes = [IsAuthenticated()]
-        return permission_classes
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
     def get(self, request, pk):
         job=get_object_or_404(Job,pk=pk)
         serializer=JobSerializer(job)
